@@ -16,11 +16,11 @@ const __dirname = dirname(__filename);
 app.use(express.static(join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-  res.sendFile(join(__dirname, 'public', 'index.html'));
+  res.sendFile(join(__dirname, 'index.html'));
 });
 
 app.get('/chat', (req, res) => {
-  res.sendFile(join(__dirname, 'public', 'chat.html'));
+  res.sendFile(join(__dirname, 'chat.html'));
 });
 
 

@@ -65,7 +65,7 @@
                 const info = { name: name.value, code: code };
                 localStorage.setItem("info", JSON.stringify(info));
                 socket.emit("name", info);
-                window.location.href = 'chat.html';
+                window.location.href = '/chat';
             }
         });
 
@@ -75,7 +75,7 @@
                 const info = { insertedCode: roomCode.value, insertedName: name.value };
                 localStorage.setItem("info", JSON.stringify(info));
                 socket.emit("insertedInfo", info);
-                window.location.href = 'chat.html';
+                window.location.href = '/chat';
             }
         });
     </script>

@@ -19,6 +19,11 @@ app.get('/', (req, res) => {
   res.sendFile(join(__dirname, 'public', 'index.html'));
 });
 
+app.get('/chat', (req, res) => {
+  res.sendFile(join(__dirname, 'public', 'chat.html'));
+});
+
+
 const users = {};
 const messageHistory = {}; 
 

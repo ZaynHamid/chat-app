@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter the Chat Room</title>
+    <style>
+        body {
+            margin: 0;
+            padding-bottom: 3rem;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        form {
+            margin: 1rem;
+        }
+
+        input {
+            margin: 0.5rem 0;
+        }
+
+        button {
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Enter the Chat Room</h2>
+    <form id="form">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" placeholder="name">
+        <input type="text" id="room-code" placeholder="code"><br />
+        <button id="join-room">Join Room</button>
+        <button id="create-room">Create Room</button>
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+        const socket = io();
+
+        const getId = id => document.getElementById(id);
+
+        const joinRoom = getId("join-room");
+        const createRoom = getId("create-room");
+        const name = getId('name');
+        const roomCode = getId('room-code');
+
+        const genRoomCode = () => {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            let roomCode = '';
+            for (let i = 0; i < 4; i++) {
+                const randomIndex = Math.floor(Math.random() * chars.length);
+                roomCode += chars[randomIndex];
+            }
+            return roomCode;
+        };
+
+        createRoom.addEventListener("click", (e) => {
+            e.preventDefault();
+            const code = genRoomCode();
+            if (name.value.trim()) {
+                const info = { name: name.value, code: code };
+                localStorage.setItem("info", JSON.stringify(info));
+                socket.emit("name", info);
+                window.location.href = 'chat.html';
+            }
+        });
+
+        joinRoom.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (name.value.trim() && roomCode.value.trim()) {
+                const info = { insertedCode: roomCode.value, insertedName: name.value };
+                localStorage.setItem("info", JSON.stringify(info));
+                socket.emit("insertedInfo", info);
+                window.location.href = 'chat.html';
+            }
+        });
+    </script>
+</body>
+
+</html>

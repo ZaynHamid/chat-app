@@ -90,11 +90,11 @@
     </div>
 
     <script>
-        const socket = io();
+
 
         const loader = document.getElementById("loader");
         const content = document.getElementById("content");
-
+        const socket = io();
         socket.on('connect', () => {
             // Hide the loader and show the content once the connection is established
             loader.style.display = 'none';

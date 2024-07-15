@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 
     <title>Enter the Chat Room</title>
     <style>
@@ -54,6 +53,9 @@
             <button id="create-room">Create Room</button>
         </form>
     </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+
 
     <script>
         const loader = document.getElementById("loader");

@@ -8,8 +8,6 @@
         integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO"
         crossorigin="anonymous"></script>
 
-
-
     <title>Enter the Chat Room</title>
     <style>
         body {
@@ -29,22 +27,39 @@
         button {
             margin: 0.5rem 0;
         }
+
+        #loader {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: block;
+            /* Show loader initially */
+        }
+
+        #content {
+            display: none;
+            /* Hide content initially */
+        }
     </style>
 </head>
 
 <body>
-    <h2>Enter the Chat Room</h2>
-    <form id="form">
-        <label for="name">Name:</label>
-        <input type="text" name="name" id="name" placeholder="name">
-        <input type="text" id="room-code" placeholder="code"><br />
-        <button id="join-room">Join Room</button>
-        <button id="create-room">Create Room</button>
-    </form>
-
+    <div id="loader">Loading...</div>
+    <div id="content">
+        <h2>Enter the Chat Room</h2>
+        <form id="form">
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" placeholder="name">
+            <input type="text" id="room-code" placeholder="code"><br />
+            <button id="join-room">Join Room</button>
+            <button id="create-room">Create Room</button>
+        </form>
+    </div>
 
     <script>
-        const socket = io();
+        const loader = document.getElementById("loader");
+        const content = document.getElementById("content");
 
         const getId = id => document.getElementById(id);
 
@@ -62,6 +77,14 @@
             }
             return roomCode;
         };
+
+        const socket = io();
+
+        socket.on('connect', () => {
+            // Hide the loader and show the content once the connection is established
+            loader.style.display = 'none';
+            content.style.display = 'block';
+        });
 
         createRoom.addEventListener("click", (e) => {
             e.preventDefault();
